@@ -21,6 +21,7 @@
     <string name="description">Description</string>
     <string name="abv">abv</string>
     <string name="review">Review</string>
+    <string name="find_beer">Find Beer</string>
 
 
 </resources>

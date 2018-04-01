@@ -20,36 +20,41 @@ public class MainActivity extends AppCompatActivity {
         btnViewCategory =findViewById(R.id.btnViewCat);
         btnViewBeer = findViewById(R.id.btnViewBeer);
 
-        btnAddBeer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i= new Intent(MainActivity.this,AddReviewActivity.class);
-                startActivity(i);
-            }
-        });
 
-        btnAddCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i= new Intent(MainActivity.this, AddCategoryActivity.class);
-                startActivity(i);
-            }
-        });
+        //create a new event handler
+        EventHandler eventHandler = new EventHandler();
 
-        btnViewCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i= new Intent(MainActivity.this, ListCategoriesActivity.class);
-                startActivity(i);
-            }
-        });
+        btnAddBeer.setOnClickListener(eventHandler);
+        btnAddCategory.setOnClickListener(eventHandler);
+        btnViewBeer.setOnClickListener(eventHandler);
+        btnViewCategory.setOnClickListener(eventHandler);
 
-        btnViewBeer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i= new Intent(MainActivity.this, ListReviewsActivity.class);
-                startActivity(i);
+    }
+
+    class EventHandler implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intent = null;
+
+            switch (v.getId()) {
+                case R.id.btnAdd:
+                    // add beer screen
+                   intent = new Intent(MainActivity.this, AddReviewActivity.class);
+                    break;
+                case R.id.btnAddCat:
+                    intent = new Intent(MainActivity.this, AddCategoryActivity.class);
+                    break;
+                case R.id.btnViewCat:
+                    intent = new Intent(MainActivity.this, ListCategoriesActivity.class);
+                    break;
+                case R.id.btnViewBeer:
+                    intent = new Intent(MainActivity.this, ListReviewsActivity.class);
+                    break;
+                default:
+                    break;
             }
-        });
+
+            startActivity(intent);
+        }
     }
 }
