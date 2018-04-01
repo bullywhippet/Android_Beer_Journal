@@ -3,6 +3,7 @@ package com.kellydwalters.thebeerjournal;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -22,7 +23,7 @@ public class AddReviewActivity extends Activity implements OnClickListener, OnIt
 
 	private EditText txtBeerName, txtDescription, txtAbv, txtReview, txtRating;
 	private Spinner mSpinnerCategory;
-	private Button mBtnAdd;
+	private Button mBtnAdd, btnFind;
 
 	private CategoryDAO mCategoryDao;
 	private ReviewDAO mReviewDao;
@@ -57,7 +58,9 @@ public class AddReviewActivity extends Activity implements OnClickListener, OnIt
 		this.txtRating =  findViewById(R.id.txt_rating);
 		this.mSpinnerCategory = findViewById(R.id.spinner_categories);
 		this.mBtnAdd = findViewById(R.id.btn_add_review_to_DB);
+		this.btnFind =findViewById(R.id.btnFind);
 
+		this.btnFind.setOnClickListener(this);
 		this.mBtnAdd.setOnClickListener(this);
 	}
 
@@ -87,10 +90,41 @@ public class AddReviewActivity extends Activity implements OnClickListener, OnIt
 				Toast.makeText(this, R.string.empty_fields_message, Toast.LENGTH_LONG).show();
 			}
 			break;
-
+		case R.id.btnFind:
+			Intent intent = new Intent(AddReviewActivity.this,FindResults.class);
+			intent.putExtra("beerName", txtBeerName.getText().toString());
+			startActivityForResult(intent, 0);
+			break;
 		default:
 			break;
 		}
+	}
+
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (resultCode == Activity.RESULT_OK){
+			// set text fields to selected beer data
+			txtBeerName.setText(data.getStringExtra("name"));
+			txtAbv.setText(data.getStringExtra("abv"));
+			txtDescription.setText(data.getStringExtra("description"));
+
+		} else {
+
+			clearTextFields();
+
+			//cancelled
+			Log.d("KELLLY", "Nothing selected " );
+		}
+	}
+
+	private void clearTextFields(){
+		txtAbv.setText("");
+		txtDescription.setText("");
+		txtReview.setText("");
+		// do the other things here as well so that a menu option can clear it too
 	}
 
 	@Override
