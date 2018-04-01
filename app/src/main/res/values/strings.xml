@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Beer Journal</string>
+    <string name="hello_beer">Hello Beer!</string>
+    <string name="beer_name">Beer Name</string>
+    <string name="add">Add</string>
+    <string name="category_name">Category name</string>
+    <string name="add_new_category">Add New category</string>
+    <string name="all_categories">All categories</string>
+    <string name="no_category_in_the_database_create_new_one">No category in the database. create new one by clicking the add button at the top right</string>
+	<string name="empty_fields_message">One or more fields are empty</string>
+	<string name="all_reviews">All reviews</string>
+	<string name="no_review_for_this_category_add_a_new_one">No review for this category. Add a new one by clicking the add button on the top right</string>
+	<string name="add_new_review">Add New review</string>
+	<string name="select_a_category">Select a category</string>
+	<string name="delete">Delete</string>
+	<string name="category_deleted_successfully">category deleted successfully</string>
+	<string name="review_deleted_successfully">review deleted successfully</string>
+    <string name="rating">Rating</string>
+    <string name="description">Description</string>
+    <string name="abv">abv</string>
+    <string name="review">Review</string>
+
+
+</resources>
