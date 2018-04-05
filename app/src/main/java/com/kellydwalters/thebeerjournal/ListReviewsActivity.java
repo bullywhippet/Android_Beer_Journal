@@ -45,7 +45,7 @@ public class ListReviewsActivity extends Activity implements OnItemLongClickList
 		// initialize views
 		initViews();
 
-		// get the company id from extras
+		// get the category id from extras
 		mReviewDao = new ReviewDAO(this);
 		Intent intent  = getIntent();
 		if(intent != null) {

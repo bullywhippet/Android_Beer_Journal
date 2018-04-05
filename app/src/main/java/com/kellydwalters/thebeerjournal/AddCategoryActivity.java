@@ -47,11 +47,11 @@ public class AddCategoryActivity extends Activity implements OnClickListener {
 			Editable categoryName = mTxtCategoryName.getText();
 
 			if (!TextUtils.isEmpty(categoryName)) {
-				// add the company to database
+				// add the category to database
 				Category createdCategory = mCategoryDao.createCategory(
 						categoryName.toString());
 				
-				Log.d(TAG, "added company : "+ createdCategory.getName());
+				Log.d(TAG, "added category : "+ createdCategory.getName());
 				Intent intent = new Intent();
 				intent.putExtra(ListCategoriesActivity.EXTRA_ADDED_CATEGORY, createdCategory);
 				setResult(RESULT_OK, intent);

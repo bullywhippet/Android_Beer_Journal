@@ -41,7 +41,7 @@ public class AddReviewActivity extends Activity implements OnClickListener, OnIt
 		this.mCategoryDao = new CategoryDAO(this);
 		this.mReviewDao = new ReviewDAO(this);
 		
-		//fill the spinner with companies
+		//fill the spinner with categories
 		List<Category> listCategories = mCategoryDao.getAllCategories();
 		if(listCategories != null) {
 			mAdapter = new SpinnerCategoriesAdapter(this, listCategories);
@@ -80,7 +80,7 @@ public class AddReviewActivity extends Activity implements OnClickListener, OnIt
 					&& !TextUtils.isEmpty(review)) {
 				// add the Category to database
 
-				Review createdReview = mReviewDao.createReview(beerName.toString(), description.toString(), abv.toString(), rating.toString(), review.toString(), mSelectedCategory.getId());
+				Review createdReview = mReviewDao.createReview(beerName.toString(), description.toString(), abv.toString(), review.toString(), rating.toString(), mSelectedCategory.getId());
 				
 				Log.d(TAG, "added review : "+ createdReview.getBeerName()+" "+ createdReview.getDescription());
 				setResult(RESULT_OK);

@@ -59,7 +59,7 @@ public class CategoryDAO {
 
 	public void deleteCategory(Category category) {
 		long id = category.getId();
-		// delete all employees of this category
+		// delete all reviews of this category
 		ReviewDAO reviewDao = new ReviewDAO(mContext);
 		List<Review> listReviews = reviewDao.getReviewsOfCategory(id);
 		if (listReviews != null && !listReviews.isEmpty()) {

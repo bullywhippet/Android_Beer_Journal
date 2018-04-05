@@ -17,8 +17,8 @@ public class ListReviewsAdapter extends BaseAdapter {
 	private List<Review> mItems;
 	private LayoutInflater mInflater;
 	
-	public ListReviewsAdapter(Context context, List<Review> listCompanies) {
-		this.setItems(listCompanies);
+	public ListReviewsAdapter(Context context, List<Review> listCategories) {
+		this.setItems(listCategories);
 		this.mInflater = LayoutInflater.from(context);
 	}
 

@@ -17,8 +17,8 @@ public class SpinnerCategoriesAdapter extends BaseAdapter {
 	private List<Category> mItems;
 	private LayoutInflater mInflater;
 	
-	public SpinnerCategoriesAdapter(Context context, List<Category> listCompanies) {
-		this.setItems(listCompanies);
+	public SpinnerCategoriesAdapter(Context context, List<Category> listCategories) {
+		this.setItems(listCategories);
 		this.mInflater = LayoutInflater.from(context);
 	}
 
