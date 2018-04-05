@@ -16,13 +16,13 @@
         android:textColor="@android:color/black" />
 
 
-    
     <Button
         android:id="@+id/btn_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_category_name"
         android:layout_marginTop="8dp"
+        android:background="@android:color/holo_orange_light"
         android:gravity="center"
         android:paddingBottom="2dp"
         android:paddingLeft="12dp"
