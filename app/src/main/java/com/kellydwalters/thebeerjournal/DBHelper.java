@@ -27,7 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_REVIEW_CATEGORY_ID = "category_id";
 
 	private static final String DATABASE_NAME = "categories.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	// SQL statement of the reviews table creation
 	private static final String SQL_CREATE_TABLE_REVIEWS = "CREATE TABLE " + TABLE_REVIEWS + "(" 

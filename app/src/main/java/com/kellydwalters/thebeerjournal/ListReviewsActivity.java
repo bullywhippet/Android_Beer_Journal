@@ -131,7 +131,24 @@ public class ListReviewsActivity extends Activity implements OnItemLongClickList
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Review clickedReview = mAdapter.getItem(position);
 		Log.d(TAG, "clickedItem : "+ clickedReview.getBeerName()+" "+ clickedReview.getRating());
-	}
+
+		try {
+            Intent intent = new Intent(ListReviewsActivity.this, ReviewDetail.class);
+            intent.putExtra("name", clickedReview.getBeerName());
+            intent.putExtra("description", clickedReview.getDescription());
+            intent.putExtra("abv", clickedReview.getAbv());
+            intent.putExtra("review", clickedReview.getReview());
+            intent.putExtra("rating", clickedReview.getRating());
+            intent.putExtra("category", clickedReview.getCategory().getName());
+            startActivity(intent);
+
+        }catch (Exception e) {
+            Toast.makeText(ListReviewsActivity.this, "There was an error loading that Item", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+
+
+    }
 
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {

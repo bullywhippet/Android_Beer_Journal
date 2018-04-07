@@ -1,110 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kellydwalters.thebeerjournal.MainActivity"
-    android:orientation="vertical">
+    android:background="@drawable/tallbeers"
+    android:orientation="vertical"
+    tools:context="com.kellydwalters.thebeerjournal.MainActivity">
 
-    <TableRow
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/tableLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:layout_height="238dp"
+        android:orientation="vertical"
+        tools:context="com.kellydwalters.thebeerjournal.MainActivity">
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="98dp"
-            android:layout_height="42dp"
-            android:text="Hello Beer!"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="461dp" />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    </TableRow>
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="98dp"
+                android:layout_height="42dp"
+                android:text="Hello Beer!"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="461dp" />
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        </TableRow>
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="40dp" />
-    </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="10dp" />
+        </TableRow>
 
-        <Button
-            android:id="@+id/btnAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/holo_orange_light"
-            android:text="Add Beer"
-            tools:layout_editor_absoluteX="59dp"
-            tools:layout_editor_absoluteY="127dp" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_orange_light"
+                android:text="Add Beer"
+                tools:layout_editor_absoluteX="59dp"
+                tools:layout_editor_absoluteY="127dp" />
 
-        <Button
-            android:id="@+id/btnViewBeer"
-            android:layout_width="142dp"
-            android:layout_height="wrap_content"
-            android:background="@android:color/holo_orange_light"
-            android:text="View Beers"
-            tools:layout_editor_absoluteX="125dp"
-            tools:layout_editor_absoluteY="365dp" />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    </TableRow>
+            <Button
+                android:id="@+id/btnViewBeer"
+                android:layout_width="142dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_orange_light"
+                android:text="View Beers"
+                tools:layout_editor_absoluteX="125dp"
+                tools:layout_editor_absoluteY="365dp" />
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        </TableRow>
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="20dp" />
-    </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+        </TableRow>
 
-        <Button
-            android:id="@+id/btnViewCat"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:background="@android:color/holo_orange_light"
-            android:text="View Categories"
-            tools:layout_editor_absoluteX="216dp"
-            tools:layout_editor_absoluteY="187dp" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
-        <Button
-            android:id="@+id/btnAddCat"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:background="@android:color/holo_orange_light"
-            android:text="Add Category"
-            tools:layout_editor_absoluteX="44dp"
-            tools:layout_editor_absoluteY="191dp" />
-    </TableRow>
+            <Button
+                android:id="@+id/btnAddCat"
+                android:layout_width="139dp"
+                android:layout_height="48dp"
+                android:background="@android:color/holo_orange_light"
+                android:text="Add Category"
+                tools:layout_editor_absoluteX="44dp"
+                tools:layout_editor_absoluteY="191dp" />
 
-</TableLayout>
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btnViewCat"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_orange_light"
+                android:text="View Categories"
+                tools:layout_editor_absoluteX="216dp"
+                tools:layout_editor_absoluteY="187dp" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</android.support.constraint.ConstraintLayout>

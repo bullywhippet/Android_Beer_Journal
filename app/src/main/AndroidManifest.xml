@@ -22,7 +22,8 @@
         <activity android:name=".ListReviewsActivity" />
         <activity android:name=".AddCategoryActivity" />
         <activity android:name=".AddReviewActivity" />
-        <activity android:name=".FindResults"></activity>
+        <activity android:name=".FindResults" />
+        <activity android:name=".ReviewDetail"></activity>
     </application>
 
 </manifest>
