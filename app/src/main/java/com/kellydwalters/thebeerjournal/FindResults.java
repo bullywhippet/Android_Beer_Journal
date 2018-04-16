@@ -1,5 +1,6 @@
 package com.kellydwalters.thebeerjournal;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -27,6 +29,7 @@ public class FindResults extends AppCompatActivity {
     private String apiKey = "key=ba3c926f89626f68edeb102cb57f0a93";
     private String apiSearchType = "&type=beer&";
 
+    private TextView tvNoResult;
     private ListView mainListView ;
     private ArrayList<ListItem> item = new ArrayList<>();
     CustomListView customListView;
@@ -37,8 +40,11 @@ public class FindResults extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = getSharedPreferences("settings",0);
+        switchTheme();
         setContentView(R.layout.activity_find_results);
 
+        tvNoResult = findViewById(R.id.tvNoResult);
         // get the beer name from the intent passed in and set it to the query string
         Intent intent = getIntent();
         String query = intent.getStringExtra("beerName");
@@ -48,8 +54,25 @@ public class FindResults extends AppCompatActivity {
         FindResults.OkHttpHandler okHttpHandler= new FindResults.OkHttpHandler();
 
         okHttpHandler.execute(url);
+    } //onCreate
+
+    private void switchTheme() {
+        String theme = sharedPreferences.getString("theme", "regular");
+
+        switch(theme)
+        {
+            case "regular":
+                setTheme(R.style.AppTheme);
+                break;
+            case "dark":
+                setTheme(R.style.nightMode);
+                break;
+            default:
+                break;
+        }
     }
 
+//    Used Allison's demo for OKhttp
     public class OkHttpHandler extends AsyncTask {
         OkHttpClient client = new OkHttpClient();
 
@@ -74,10 +97,10 @@ public class FindResults extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Object o) {
-            super.onPostExecute(o);
-            Log.d("KELLLY", o.toString());
-            parseResponse(o.toString());
+        protected void onPostExecute(Object obj) {
+            super.onPostExecute(obj);
+            Log.d("KELLLY", obj.toString());
+            parseResponse(obj.toString());
             setClickHandler();
 
         }
@@ -92,6 +115,7 @@ public class FindResults extends AppCompatActivity {
 
                 Intent resultIntent = new Intent();
 
+                // put all the results into the intent when user chooses an item
                 resultIntent.putExtra("name", item.get(position).getName());
                 resultIntent.putExtra("abv", item.get(position).getAbv());
                 resultIntent.putExtra("description", item.get(position).getDescription());
@@ -102,7 +126,7 @@ public class FindResults extends AppCompatActivity {
 
                 }
                 else{
-                    Toast.makeText(FindResults.this, "Data was NOT saved successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FindResults.this, "Data was NOT selected successfully", Toast.LENGTH_SHORT).show();
                 }
                 finish();
             }
@@ -111,17 +135,17 @@ public class FindResults extends AppCompatActivity {
 
     private void parseResponse(String response) {
         try{
-
             // Convert String to json object
             JSONObject reader = new JSONObject(response);
 
-            // Nesting levels of nodes
-            // for beer name: ['data'][i]['name']
-            // for abv: ['data'][i]['abv']
-            // description ['data'][0]['style']['description']
-            // image ['data'][i]['labels']['icon']
+            // Nesting levels of nodes from api response
+                // for beer name: ['data'][i]['name']
+                // for abv: ['data'][i]['abv']
+                // description ['data'][0]['style']['description']
+                // image ['data'][i]['labels']['icon']
 
 
+            // initialize things
             String name = "n/a";
             String abv = "n/a";
             String description = "n/a";
@@ -132,26 +156,26 @@ public class FindResults extends AppCompatActivity {
 
             for (int i = 0; i < jsonData.length(); i++) {
                 // get the main level of items
-                JSONObject c = jsonData.getJSONObject(i);
+                JSONObject beer = jsonData.getJSONObject(i);
 
-                if (c.has("name")) {
-                    name =  c.getString("name");
+                if (beer.has("name")) {
+                    name =  beer.getString("name");
                 }
 
-                if (c.has("abv")) {
-                    abv = c.getString("abv");
+                if (beer.has("abv")) {
+                    abv = beer.getString("abv");
                 }
 
                 //description is nested
-                JSONObject style = c.getJSONObject("style");
+                JSONObject style = beer.getJSONObject("style");
 
                 if (style.has("description")) {
                     description = style.getString("description");
                 }
 
                 // Label is nested
-                if (c.has("labels")) {
-                    JSONObject label = c.getJSONObject("labels");
+                if (beer.has("labels")) {
+                    JSONObject label = beer.getJSONObject("labels");
                     image = label.getString("medium");
                 }
                 else {
@@ -159,8 +183,7 @@ public class FindResults extends AppCompatActivity {
                     image = "http://tutaki.org.nz/wp-content/uploads/2016/04/no-image-available.png";
                 }
 
-
-
+                //set the properties of the individual list item
                 ListItem listItem = new ListItem();
 
                 listItem.setName(name);
@@ -184,18 +207,22 @@ public class FindResults extends AppCompatActivity {
                 customListView = new CustomListView(FindResults.this, titleList, abvList, imageList);
                 mainListView.setAdapter( customListView );
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
+            tvNoResult.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
-    public void onBackPressed() {
+    protected void onResume() {
+        super.onResume();
+    }
 
+    @Override
+    public void onBackPressed() {
+        // if user presses back it means they didn't select something
         setResult(this.RESULT_CANCELED);
         Toast.makeText(this, "No data selected", Toast.LENGTH_SHORT).show();
-
 
         super.onBackPressed(); //calls this.finish
     }

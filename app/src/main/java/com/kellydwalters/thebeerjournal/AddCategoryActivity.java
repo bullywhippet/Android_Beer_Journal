@@ -2,6 +2,7 @@ package com.kellydwalters.thebeerjournal;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -20,15 +21,20 @@ public class AddCategoryActivity extends Activity implements OnClickListener {
 	private EditText mTxtCategoryName;
 	private Button mBtnAdd;
 
+	SharedPreferences sharedPreferences;
 	private CategoryDAO mCategoryDao;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        sharedPreferences = getSharedPreferences("settings",0);
+        switchTheme();
 		setContentView(R.layout.activity_add_category);
 
+		//set up all the buttons
 		initViews();
 
+		// set up the database helper objecy
 		this.mCategoryDao = new CategoryDAO(this);
 	}
 
@@ -52,6 +58,8 @@ public class AddCategoryActivity extends Activity implements OnClickListener {
 						categoryName.toString());
 				
 				Log.d(TAG, "added category : "+ createdCategory.getName());
+
+				// if the category is added from the list view, send it back thorugh the intent
 				Intent intent = new Intent();
 				intent.putExtra(ListCategoriesActivity.EXTRA_ADDED_CATEGORY, createdCategory);
 				setResult(RESULT_OK, intent);
@@ -67,9 +75,26 @@ public class AddCategoryActivity extends Activity implements OnClickListener {
 		}
 	}
 
+	private void switchTheme() {
+		String theme = sharedPreferences.getString("theme", "regular");
+
+		switch(theme)
+		{
+			case "regular":
+				setTheme(R.style.AppTheme);
+				break;
+			case "dark":
+				setTheme(R.style.nightMode);
+				break;
+			default:
+				break;
+		}
+	}
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		// close the category helper
 		mCategoryDao.close();
 	}
 }

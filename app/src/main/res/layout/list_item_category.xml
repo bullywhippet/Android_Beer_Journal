@@ -8,11 +8,11 @@
         android:id="@+id/tvCategoryName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="@string/category_name"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="?attr/colorAccent"
         android:textStyle="bold" />
 
 </RelativeLayout>

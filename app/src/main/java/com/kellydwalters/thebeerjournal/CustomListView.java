@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
- * Created by Kelly on 2018-03-31.
+ * Used in the results from an api query
  */
 
 public class CustomListView extends ArrayAdapter<String>{
@@ -35,6 +35,7 @@ public class CustomListView extends ArrayAdapter<String>{
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder vh = null;
+        //create the view if it doesn't exist
         if (convertView == null) {
             LayoutInflater inflater = context.getLayoutInflater();
             convertView = inflater.inflate(R.layout.found_row, null, true);
@@ -44,6 +45,7 @@ public class CustomListView extends ArrayAdapter<String>{
             vh = (ViewHolder) convertView.getTag();
         }
 
+        //set the text of the textviews in the view holder
         vh.tvName.setText(title.get(position));
         vh.tvABV.setText(abvValue.get(position));
 
@@ -54,7 +56,10 @@ public class CustomListView extends ArrayAdapter<String>{
         return convertView;
     }
 
-    class ViewHolder {
+    /**
+     * Set up the viewholder
+     */
+    public class ViewHolder {
         TextView tvName, tvABV;
         ImageView image;
 

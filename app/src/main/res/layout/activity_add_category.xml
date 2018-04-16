@@ -9,11 +9,11 @@
         android:id="@+id/txt_category_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/category_name"
         android:layout_marginTop="24dp"
+        android:hint="@string/category_name"
         android:inputType="text"
         android:textAppearance="?android:attr/textAppearance"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/holo_orange_dark" />
 
 
     <Button

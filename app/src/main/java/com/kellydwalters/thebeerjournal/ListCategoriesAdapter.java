@@ -9,7 +9,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-
+/**
+ * Adapter to get and set item and view properties
+ * involved in displaying items in a list
+ */
 public class ListCategoriesAdapter extends BaseAdapter {
 	
 	public static final String TAG = "ListCategoriesAdapter";

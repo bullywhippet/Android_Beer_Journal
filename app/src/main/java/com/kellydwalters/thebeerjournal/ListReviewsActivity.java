@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +24,9 @@ public class ListReviewsActivity extends Activity implements OnItemLongClickList
 
 	public static final String TAG = "ListReviewsActivity";
 
-	public static final int REQUEST_CODE_ADD_REVIEW = 40;
+    SharedPreferences sharedPreferences;
+
+    public static final int REQUEST_CODE_ADD_REVIEW = 40;
 	public static final String EXTRA_ADDED_REVIEW = "extra_key_added_review";
 	public static final String EXTRA_SELECTED_CATEGORY_ID = "extra_key_selected_category_id";
 
@@ -40,6 +43,8 @@ public class ListReviewsActivity extends Activity implements OnItemLongClickList
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		sharedPreferences = getSharedPreferences("settings",0);
+		switchTheme();
 		setContentView(R.layout.activity_list_reviews);
 
 		// initialize views
@@ -52,10 +57,9 @@ public class ListReviewsActivity extends Activity implements OnItemLongClickList
 			this.mCategoryId = intent.getLongExtra(EXTRA_SELECTED_CATEGORY_ID, -1);
 		}
 
-//		if(mCategoryId != -1) {
-//			mListReviews = mReviewDao.getReviewsOfCategory(mCategoryId);
-			// fill the listView
-			mListReviews = mReviewDao.getAllReviews();
+        // fill the listView
+		if(mCategoryId != -1) {
+			mListReviews = mReviewDao.getReviewsOfCategory(mCategoryId);
 			if(mListReviews != null && !mListReviews.isEmpty()) {
 				mAdapter = new ListReviewsAdapter(this, mListReviews);
 				mListviewReviews.setAdapter(mAdapter);
@@ -64,7 +68,19 @@ public class ListReviewsActivity extends Activity implements OnItemLongClickList
 				mTxtEmptyListReviews.setVisibility(View.VISIBLE);
 				mListviewReviews.setVisibility(View.GONE);
 			}
-//		}
+		} // set view based on selected category
+		else{
+			// fill the listView
+			mListReviews = mReviewDao.getAllReviews();
+            if(mListReviews != null && !mListReviews.isEmpty()) {
+                mAdapter = new ListReviewsAdapter(this, mListReviews);
+                mListviewReviews.setAdapter(mAdapter);
+            }
+            else {
+                mTxtEmptyListReviews.setVisibility(View.VISIBLE);
+                mListviewReviews.setVisibility(View.GONE);
+            }
+		}
 	}
 
 	private void initViews() {
@@ -74,6 +90,22 @@ public class ListReviewsActivity extends Activity implements OnItemLongClickList
 		this.mListviewReviews.setOnItemClickListener(this);
 		this.mListviewReviews.setOnItemLongClickListener(this);
 		this.mBtnAddReview.setOnClickListener(this);
+	}
+
+	private void switchTheme() {
+		String theme = sharedPreferences.getString("theme", "regular");
+
+		switch(theme)
+		{
+			case "regular":
+				setTheme(R.style.AppTheme);
+				break;
+			case "dark":
+				setTheme(R.style.nightMode);
+				break;
+			default:
+				break;
+		}
 	}
 
 	@Override
@@ -98,14 +130,17 @@ public class ListReviewsActivity extends Activity implements OnItemLongClickList
 					mListReviews = new ArrayList<Review>();
 				}
 
-				if(mReviewDao == null)
-					mReviewDao = new ReviewDAO(this);
-//				mListReviews = mReviewDao.getReviewsOfCategory(mCategoryId);
+				if(mReviewDao == null) {
+                    mReviewDao = new ReviewDAO(this);
+                }
+//				    mListReviews = mReviewDao.getReviewsOfCategory(mCategoryId);
                 mListReviews = mReviewDao.getAllReviews();
 				if(mAdapter == null) {
 
 					mAdapter = new ListReviewsAdapter(this, mListReviews);
 					mListviewReviews.setAdapter(mAdapter);
+
+					// handle message that appears if list is empty
 					if(mListviewReviews.getVisibility() != View.VISIBLE) {
 						mTxtEmptyListReviews.setVisibility(View.GONE);
 						mListviewReviews.setVisibility(View.VISIBLE);
@@ -117,8 +152,14 @@ public class ListReviewsActivity extends Activity implements OnItemLongClickList
 				}
 			}
 		}
-		else 
+		else {
 			super.onActivityResult(requestCode, resultCode, data);
+		}
+	}
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 	}
 
 	@Override
@@ -132,6 +173,7 @@ public class ListReviewsActivity extends Activity implements OnItemLongClickList
 		Review clickedReview = mAdapter.getItem(position);
 		Log.d(TAG, "clickedItem : "+ clickedReview.getBeerName()+" "+ clickedReview.getRating());
 
+		// when a review is clicked take its values and send them to the detail activity
 		try {
             Intent intent = new Intent(ListReviewsActivity.this, ReviewDetail.class);
             intent.putExtra("name", clickedReview.getBeerName());
@@ -152,6 +194,7 @@ public class ListReviewsActivity extends Activity implements OnItemLongClickList
 
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+	    // delete on long click
 		Review clickedReview = mAdapter.getItem(position);
 		Log.d(TAG, "longClickedItem : "+ clickedReview.getBeerName()+" "+ clickedReview.getRating());
 		
@@ -176,7 +219,6 @@ public class ListReviewsActivity extends Activity implements OnItemLongClickList
 				// delete the review and refresh the list
 				if(mReviewDao != null) {
 					mReviewDao.deleteReview(review);
-					
 					//refresh the listView
 					mListReviews.remove(review);
 					if(mListReviews.isEmpty()) {
@@ -190,7 +232,6 @@ public class ListReviewsActivity extends Activity implements OnItemLongClickList
 				
 				dialog.dismiss();
 				Toast.makeText(ListReviewsActivity.this, R.string.review_deleted_successfully, Toast.LENGTH_SHORT).show();
-
 			}
 		});
         

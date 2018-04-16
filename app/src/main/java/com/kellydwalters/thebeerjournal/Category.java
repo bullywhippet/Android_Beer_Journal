@@ -2,9 +2,14 @@ package com.kellydwalters.thebeerjournal;
 
 import java.io.Serializable;
 
+/**
+ * models a Category object
+ * Categories just have a name and an ID
+ */
 public class Category implements Serializable {
 
 	public static final String TAG = "Category";
+	// this was in the demo i followed.
 	private static final long serialVersionUID = -7406082437623008161L;
 	
 	private long mId;
@@ -14,7 +19,6 @@ public class Category implements Serializable {
 
 	public Category(String name) {
 		this.mName = name;
-
 	}
 	
 	public long getId() {

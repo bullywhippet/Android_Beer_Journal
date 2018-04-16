@@ -13,7 +13,6 @@ import android.widget.TextView;
 public class ListReviewsAdapter extends BaseAdapter {
 	
 	public static final String TAG = "ListReviewsAdapter";
-	
 	private List<Review> mItems;
 	private LayoutInflater mInflater;
 	

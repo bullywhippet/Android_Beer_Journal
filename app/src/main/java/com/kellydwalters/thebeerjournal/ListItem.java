@@ -1,7 +1,7 @@
 package com.kellydwalters.thebeerjournal;
 
 /**
- * Created by Kelly on 2018-03-31.
+ * Models a list item for found beers
  */
 
 public class ListItem {

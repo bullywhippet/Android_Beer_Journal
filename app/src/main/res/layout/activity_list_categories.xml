@@ -34,7 +34,7 @@
         android:layout_centerInParent="true"
         android:layout_margin="4dp"
         android:gravity="center"
-        android:text="no_category_in_the_database_create_new_one"
+        android:text="@string/no_category_in_the_database_create_new"
         android:textAppearance="?android:attr/textAppearance"
         android:textColor="@android:color/darker_gray"
         android:visibility="gone" />

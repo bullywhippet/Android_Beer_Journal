@@ -12,6 +12,7 @@
         android:layout_alignParentTop="true"
         android:text="@string/category_name"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="?attr/colorAccent"
         android:textStyle="bold" />
 
 

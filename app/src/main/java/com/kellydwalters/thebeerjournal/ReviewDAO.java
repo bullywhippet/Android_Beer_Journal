@@ -10,6 +10,10 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+/**
+ * Models a Review Data Access Object to help interact with DB
+ * Followed a combination of tutorials to construct this
+ */
 public class ReviewDAO {
 
 	public static final String TAG = "ReviewDAO";

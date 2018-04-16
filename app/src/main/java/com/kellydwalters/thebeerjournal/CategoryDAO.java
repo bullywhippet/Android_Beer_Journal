@@ -10,7 +10,10 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-
+/**
+ * models a Category Data Access Object to help interact with DB
+ * Followed a combination of tutorials to construct this
+ */
 public class CategoryDAO {
 
 	public static final String TAG = "CategoryDAO";

@@ -22,6 +22,10 @@
     <string name="abv">abv</string>
     <string name="review">Review</string>
     <string name="find_beer">Find Beer</string>
+    <string name="enable_fast_scrolling">Enable Fast Scrolling:</string>
+    <string name="enable_dark_mode">  Enable Dark Mode  </string>
+    <string name="no_category_in_the_database_create_new">There are no categories in the database, please create one</string>
+    <string name="no_results_found_please_press_back_and_try_a_different_search">No results found. Please press back and try a different search</string>
 
 
 </resources>

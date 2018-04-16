@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * Database helper class to create tables and cols
+ */
 public class DBHelper extends SQLiteOpenHelper {
 
 	public static final String TAG = "DBHelper";

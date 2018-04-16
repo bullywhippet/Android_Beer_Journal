@@ -2,17 +2,17 @@ package com.kellydwalters.thebeerjournal;
 
 import java.io.Serializable;
 
+/**
+ * Models a review of a beer
+ */
 public class Review implements Serializable {
 
 	public static final String TAG = "Review";
+	// this serial number was part of one of the tutorials.
 	private static final long serialVersionUID = -7406082437623008161L;
 
 	private long mId;
-	private String mBeerName;
-	private String mDescription;
-	private String mAbv;
-	private String mReview;
-	private String mRating;
+	private String mBeerName, mDescription, mAbv, mReview, mRating;
 	private Category mCategory;
 
 	public Review() {

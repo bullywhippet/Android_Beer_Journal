@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +20,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+/**
+ * Shows all the categories that have been entered
+ */
 public class ListCategoriesActivity extends Activity implements OnItemLongClickListener, OnItemClickListener, OnClickListener {
 	
 	public static final String TAG = "ListCategoriesActivity";
@@ -35,12 +38,18 @@ public class ListCategoriesActivity extends Activity implements OnItemLongClickL
 	private List<Category> mListCategories;
 	private CategoryDAO mCategoryDao;
 
+    SharedPreferences sharedPreferences;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		sharedPreferences = getSharedPreferences("settings",0);
+		switchTheme();
 		setContentView(R.layout.activity_list_categories);
-		
-		// initialize views
+
+        sharedPreferences = getSharedPreferences("settings",0);
+
+        // initialize views
 		initViews();
 		
 		// fill the listView
@@ -51,6 +60,7 @@ public class ListCategoriesActivity extends Activity implements OnItemLongClickL
 			mListviewCategories.setAdapter(mAdapter);
 		}
 		else {
+		    // if there is no categories show a message
 			mTxtEmptyListCategories.setVisibility(View.VISIBLE);
 			mListviewCategories.setVisibility(View.GONE);
 		}
@@ -65,10 +75,27 @@ public class ListCategoriesActivity extends Activity implements OnItemLongClickL
 		this.mBtnAddCategory.setOnClickListener(this);
 	}
 
+    private void switchTheme() {
+        String theme = sharedPreferences.getString("theme", "regular");
+
+        switch(theme)
+        {
+            case "regular":
+                setTheme(R.style.AppTheme);
+                break;
+            case "dark":
+                setTheme(R.style.nightMode);
+                break;
+            default:
+                break;
+        }
+    }
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_add_category:
+		    // go to the add category activity
 			Intent intent = new Intent(this, AddCategoryActivity.class);
 			startActivityForResult(intent, REQUEST_CODE_ADD_CATEGORY);
 			break;
@@ -85,9 +112,12 @@ public class ListCategoriesActivity extends Activity implements OnItemLongClickL
 				// add the added category to the listCategories and refresh the listView
 				if(data != null) {
 					Category createdCategory = (Category) data.getSerializableExtra(EXTRA_ADDED_CATEGORY);
+
 					if(createdCategory != null) {
 						if(mListCategories == null)
+						    // if there's no list, make a new one
 							mListCategories = new ArrayList<Category>();
+						// add the category to the list
 						mListCategories.add(createdCategory);
 						
 						if(mAdapter == null) {
@@ -110,7 +140,12 @@ public class ListCategoriesActivity extends Activity implements OnItemLongClickL
 		else 
 			super.onActivityResult(requestCode, resultCode, data);
 	}
-	
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -121,7 +156,9 @@ public class ListCategoriesActivity extends Activity implements OnItemLongClickL
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Category clickedCategory = mAdapter.getItem(position);
 		Log.d(TAG, "clickedItem : "+ clickedCategory.getName());
-		
+		// Set up to show all reviews within an individual category,
+        // however, its kind of glitchy. I intend to work through it in the future so I didn't
+        // want to completely get rid of it for my submission
 		Intent intent = new Intent(this, ListReviewsActivity.class);
 		intent.putExtra(ListReviewsActivity.EXTRA_SELECTED_CATEGORY_ID, clickedCategory.getId());
 		startActivity(intent);
@@ -129,6 +166,7 @@ public class ListCategoriesActivity extends Activity implements OnItemLongClickL
 
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+	    // long click brings up delete dialog
 		Category clickedCategory = mAdapter.getItem(position);
 		Log.d(TAG, "longClickedItem : "+ clickedCategory.getName());
 		showDeleteDialogConfirmation(clickedCategory);
@@ -136,6 +174,7 @@ public class ListCategoriesActivity extends Activity implements OnItemLongClickL
 	}
 
 	private void showDeleteDialogConfirmation(final Category clickedCategory) {
+	    // make an alert dialog
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		 
         alertDialogBuilder.setTitle("Delete");
